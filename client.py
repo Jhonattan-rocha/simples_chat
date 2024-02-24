@@ -173,6 +173,7 @@ class Client(threading.Thread):
         if messagebox.askokcancel("Fechar", "Deseja realmente fechar a aplicação?"):
             client.close()
             self.root.destroy()
+            sys.exit(0)
     
     def run(self) -> None:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as client:
