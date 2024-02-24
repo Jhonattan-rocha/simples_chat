@@ -148,8 +148,11 @@ class Client(threading.Thread):
             
             threading.Thread(target=self.listen_messages, args=(client, )).start()
             
-            print(user)
-
+            self.username_button.config(state="disabled")
+            self.username_textbox.config(state="disabled")
+            self.message_textbox.config(state="normal")
+            self.message_button.config(state="normal")
+            
     def add_message(self, message):
         self.message_box.config(state=tk.NORMAL)
         self.message_box.insert(tk.END, message + '\n')
@@ -167,7 +170,7 @@ class Client(threading.Thread):
             self.add_message(self.decrypt_large_message(message).decode())
     
     def on_closing(self, client: socket.socket):
-        if tk.messagebox.askokcancel("Fechar", "Deseja realmente fechar a aplicação?"):
+        if messagebox.askokcancel("Fechar", "Deseja realmente fechar a aplicação?"):
             client.close()
             self.root.destroy()
     
@@ -207,6 +210,9 @@ class Client(threading.Thread):
                 self.message_button = tk.Button(self.bottom_frame, text="Send", font=BUTTON_FONT, bg=OCEAN_BLUE, fg=WHITE, command=lambda : self.send_message_from_GUI(client))
                 self.message_button.pack(side=tk.LEFT, padx=10)
 
+                self.message_textbox.config(state="disabled")
+                self.message_button.config(state="disabled")
+                
                 self.message_box = scrolledtext.ScrolledText(self.middle_frame, font=SMALL_FONT, bg=MEDIUM_GREY, fg=WHITE, width=67, height=26.5)
                 self.message_box.config(state=tk.DISABLED)
                 self.message_box.pack(side=tk.TOP)
