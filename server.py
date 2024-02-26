@@ -137,7 +137,7 @@ class Server(threading.Thread):
         client_public_key = client.recv(2048)
         client_public_key_obj = self.load_public_key(client_public_key)
         enc_key = self.encrypt_key_with_public_key(self.key, client_public_key_obj)
-        client.sendall(enc_key)
+        self.send_message(enc_key)
         
     def client_handle(self, client, address):        
         try: 
